@@ -53,6 +53,9 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        
+        # this is nice for developing the animations for character
+        debug(self.player.status)
     
 # ideally, we want to have sprites drawn before other sprites in relation to their Y position, 
 # ie. a rock whose Y position is higher up on the screen (closer to 0), should be drawn before others
