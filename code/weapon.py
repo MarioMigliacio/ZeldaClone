@@ -1,5 +1,4 @@
 import pygame
-from player import *
 
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, player, groups):
