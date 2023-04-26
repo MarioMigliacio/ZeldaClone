@@ -5,6 +5,7 @@ from player import Player
 from debug import debug
 from support import *
 from random import choice
+from weapon import Weapon
 
 class Level:
     def __init__(self):
@@ -15,6 +16,9 @@ class Level:
         # Sprite group setup
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
+        
+        # attack sprites
+        self.current_attack = None
         
         self.create_map()
     
@@ -48,14 +52,19 @@ class Level:
                             surface = graphics['objects'][int(col)]
                             Tile((x, y), [self.visible_sprites, self.obstacle_sprites], 'object', surface)
 
-        self.player = Player((2000, 1430), [self.visible_sprites], self.obstacle_sprites)
+        self.player = Player((2000, 1430), [self.visible_sprites], self.obstacle_sprites, self.create_attack, self.destroy_attack)
+    
+    def create_attack(self):
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+    
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
     
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        
-        # this is nice for developing the animations for character
-        debug(self.player.status)
     
 # ideally, we want to have sprites drawn before other sprites in relation to their Y position, 
 # ie. a rock whose Y position is higher up on the screen (closer to 0), should be drawn before others
