@@ -6,6 +6,7 @@ from debug import debug
 from support import *
 from random import choice
 from weapon import Weapon
+from ui import UI
 
 class Level:
     def __init__(self):
@@ -20,7 +21,10 @@ class Level:
         # attack sprites
         self.current_attack = None
         
+        # sprite setup
         self.create_map()
+        
+        self.ui = UI()
     
     def create_map(self):
         layouts = {
@@ -65,6 +69,7 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.ui.display(self.player)
     
 # ideally, we want to have sprites drawn before other sprites in relation to their Y position, 
 # ie. a rock whose Y position is higher up on the screen (closer to 0), should be drawn before others
