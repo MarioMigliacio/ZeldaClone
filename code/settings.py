@@ -1,3 +1,4 @@
+# game display settings
 WIDTH = 1280
 HEIGHT = 720
 FPS = 60
@@ -13,6 +14,10 @@ UI_FONT = '../graphics/font/joystix.ttf'
 UI_FONT_SIZE = 18
 EXP_PADDING = 20
 BAR_PADDING = 3
+HEALTH_BAR_X = 10
+HEALTH_BAR_Y = 10
+ENERGY_BAR_X = 10
+ENERGY_BAR_Y = 34
 WEAPON_SELECTION_BOX_X = 10
 WEAPON_SELECTION_BOX_Y = 630
 MAGIC_SELECTION_BOX_X = 80
@@ -36,6 +41,12 @@ weapon_data = {
     'axe': {'cooldown': 300, 'damage': 20, 'graphic': '../graphics/weapons/axe/full.png'},
     'rapier': {'cooldown': 50, 'damage': 8, 'graphic': '../graphics/weapons/rapier/full.png'},
     'sai': {'cooldown': 80, 'damage': 10, 'graphic': '../graphics/weapons/sai/full.png'}
+}
+
+# magic
+magic_data = {
+    'flame': {'strength': 5, 'cost': 20, 'graphic': '../graphics/particles/flame/fire.png'},
+    'heal': {'strength': 20, 'cost': 10, 'graphic': '../graphics/particles/heal/heal.png'}
 }
 
 # OLD 

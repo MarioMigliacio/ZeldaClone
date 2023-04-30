@@ -8,8 +8,8 @@ class UI:
         self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE)
         
         # bar setup
-        self.health_bar_rect = pygame.Rect(10, 10, HEALTH_BAR_WIDTH, BAR_HEIGHT)
-        self.energy_bar_rect = pygame.Rect(10, 34, ENERGY_BAR_WIDTH, BAR_HEIGHT)
+        self.health_bar_rect = pygame.Rect(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, BAR_HEIGHT)
+        self.energy_bar_rect = pygame.Rect(ENERGY_BAR_X, ENERGY_BAR_Y, ENERGY_BAR_WIDTH, BAR_HEIGHT)
         
         # convert weapon dictionary
         self.weapon_graphics = []
@@ -18,6 +18,12 @@ class UI:
             weapon = pygame.image.load(path).convert_alpha()
             self.weapon_graphics.append(weapon)
             
+        # convert magic dictionary
+        self.magic_graphics = []
+        for magic in magic_data.values():
+            path = magic['graphic']
+            magic = pygame.image.load(path).convert_alpha()
+            self.magic_graphics.append(magic)
     
     def show_bar(self, current, max_amount, bg_rect, color):
         # draw bg first ( black rectangle )
@@ -54,19 +60,22 @@ class UI:
         return bg_rect
         
     def weapon_overlay(self, weapon_index, has_switched):
-        bg_rect = self.selection_box(WEAPON_SELECTION_BOX_X, WEAPON_SELECTION_BOX_Y, has_switched) # weapon
+        bg_rect = self.selection_box(WEAPON_SELECTION_BOX_X, WEAPON_SELECTION_BOX_Y, has_switched)
         weapon_surf = self.weapon_graphics[weapon_index]
         weapon_rect = weapon_surf.get_rect(center = bg_rect.center)
         
         self.display_surface.blit(weapon_surf, weapon_rect)
     
+    def magic_overlay(self, magic_index, has_switched):
+        bg_rect = self.selection_box(MAGIC_SELECTION_BOX_X, MAGIC_SELECTION_BOX_Y, has_switched)
+        magic_surf = self.magic_graphics[magic_index]
+        magic_rect = magic_surf.get_rect(center = bg_rect.center)
+        
+        self.display_surface.blit(magic_surf, magic_rect)
+    
     def display(self, player):
         self.show_bar(player.health, player.stats['health'], self.health_bar_rect, HEALTH_COLOR)
         self.show_bar(player.energy, player.stats['energy'], self.energy_bar_rect, ENERGY_COLOR)
-        
         self.show_exp(player.exp)
-        
         self.weapon_overlay(player.weapon_index, player.can_switch_weapon)
-        
-        # we need to make changes to players magic abilities before adding the magic ui
-        #self.selection_box(MAGIC_SELECTION_BOX_X, MAGIC_SELECTION_BOX_Y) # magic
+        self.magic_overlay(player.magic_index, player.can_switch_magic)
